@@ -1,4 +1,6 @@
-This image helps to
+This image aims to help use [zedapp](http://zedapp.org/) to edit files inside
+of running docker containers. Its a replacement of the usual process:
+*ssh + vi*. Under the hood its uses jpetazzo's [nsenter](https://github.com/jpetazzo/nsenter)
 
 ## install zedapp
 
@@ -25,3 +27,4 @@ zed <container> <directory>
 
 This will:
 - start a `zed-server` if not already running.
+- print out the zed *remote-url* you have to copy-paste into zedapp.
