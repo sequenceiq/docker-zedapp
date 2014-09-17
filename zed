@@ -6,10 +6,10 @@ zeddir() {
   : ${container:? required}
   : ${zeddir:? required}
 
-  docker inspect zed-server &> /dev/null && echo zed-server is already running 1>&2 || docker run -d --name zed-server -p 7337:7337 --entrypoint=/bin/sh zed -c "/zedrem --server"
+  docker inspect zed-server &> /dev/null && echo zed-server is already running 1>&2 || docker run -d --name zed-server -p 7337:7337 --entrypoint=/bin/sh sequenceiq/zedapp -c "/zedrem --server"
   local zedip=$(docker inspect -f "{{.NetworkSettings.IPAddress}}" zed-server)
 
-  docker run --rm --entrypoint=sh zed -c 'cat /zedrem' \
+  docker run --rm --entrypoint=sh sequenceiq/zedapp -c 'cat /zedrem' \
     | docker-enter $container sh -c 'cat>/zedrem'
   docker-enter $container sh -c 'chmod +x /zedrem'
 

@@ -13,7 +13,7 @@ start the *zed-server* in a docker container.
 
 Install the shell script into `/usr/local/bin` by:
 ```
-docker run --rm -v /usr/local/bin:/target zed
+docker run --rm -v /usr/local/bin:/target sequenceiq/zedapp
 ```
 
 ## start session
@@ -22,3 +22,6 @@ To start a session for remote edit files in a container
 ```
 zed <container> <directory>
 ```
+
+This will:
+- start a `zed-server` if not already running.
