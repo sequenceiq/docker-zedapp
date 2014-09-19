@@ -37,8 +37,8 @@ EOF
 
 	cp /zed /target
 
-	ls /target/nsenter &>/dev/null || cp /nsenter /target
-	ls /target/docker-enter &>/dev/null || cp /docker-enter /target
+	ls /target/nsenter >/dev/null 2>&1 || cp /nsenter /target
+	ls /target/docker-enter >/dev/null 2>&1 || cp /docker-enter /target
 else
 	cat <<"EOF"
 
