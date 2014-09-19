@@ -9,4 +9,4 @@ RUN chmod +x /zedrem
 ADD zed /
 ADD installer /
 
-ENTRYPOINT [ "/installer" ]
+CMD [ "/installer" ]
