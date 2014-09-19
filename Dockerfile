@@ -1,6 +1,6 @@
 FROM jpetazzo/nsenter:latest
 
-ENV UPDATED 2014-09-15
+ENV UPDATED 2014-09-19
 
 ADD http://get.zedapp.org/zedrem-Linux-x86_64 /zedrem
 RUN chmod +x /zedrem
