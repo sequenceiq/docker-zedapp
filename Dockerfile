@@ -9,4 +9,5 @@ RUN chmod +x /zedrem
 ADD zed /
 ADD installer /
 
+EXPOSE 7337
 CMD [ "/installer" ]
