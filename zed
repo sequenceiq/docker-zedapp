@@ -28,11 +28,11 @@ zeddir() {
 
   debug copy zedrem binary into $container
   docker run --rm --entrypoint=sh sequenceiq/zedapp -c 'cat /zedrem' \
-    | docker-enter $container sh -c 'cat>/zedrem'
-  docker-enter $container sh -c 'chmod +x /zedrem'
+    | docker-enter $container "sh -c 'cat>/zedrem'"
+  docker-enter $container "sh -c 'chmod +x /zedrem'"
 
   debug starting zedrem in: $container conneting to ws://${zedip}:7337
-  docker-enter $container sh -c "/zedrem -u ws://${zedip}:7337 ${zeddir}"
+  docker-enter $container "sh -c \"/zedrem -u ws://${zedip}:7337 ${zeddir}\""
 }
 
 zeddir "$@"
