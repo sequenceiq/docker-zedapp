@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:12.04
 
 ENV UPDATED 2014-09-15
 ADD http://get.zedapp.org/zedrem-Linux-x86_64 /zedrem
