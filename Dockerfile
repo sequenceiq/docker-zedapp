@@ -7,7 +7,7 @@ RUN chmod +x /zedrem
 #ADD zedrem-Linux-x86_64 /zedrem
 
 # fix busybox: unrecognized option `--ignore-environment'
-ADD https://raw.githubusercontent.com/jpetazzo/nsenter/bf9db374d983ffcdc9ec4b2cdf6e6fb1baa47dc0/docker-enter /
+ADD https://raw.githubusercontent.com/jpetazzo/nsenter/c01cf225b5ac2bd1bc5fd022de2746e131157608/docker-enter /
 RUN chmod +x /docker-enter
 ADD zed /
 ADD installer /
