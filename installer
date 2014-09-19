@@ -1,9 +1,62 @@
 #!/bin/sh
 
 if mountpoint -q /target; then
-	echo "Installing ZED to /target"
+
+	if docker info | grep Boot2Docker &> /dev/null; then
+		cat <<"EOF"
+
+Boot2docker
+-----------
+
+It looks like you are using boot2docker, so you have
+to define a helper function which calls the real
+script inside of boot2docker:
+
+  zed() { ssh b2d "sh -c \"sudo zed $@ \" " ; }
+
+you can put it into your ~/.profile
+
+Usage
+-----
+
+To start a zed session, run the zed script:
+
+	zed <container> <dir>
+
+EOF
+	else
+    cat <<"EOF"
+Usage
+-----
+
+To start a zed session, run the zed script:
+
+  zed <container> <dir>
+EOF
+	fi
+
 	cp /zed /target
+
+	ls /target/nsenter &>/dev/null || cp /nsenter /target
+	ls /target/docker-enter &>/dev/null || cp /docker-enter /target
 else
-	echo "/target is not a mountpoint."
-	echo "You should re-run this container with -v /usr/local/bin:/target"
+	cat <<"EOF"
+
+This docker image aims to be able to edit any file in a running container
+with the http://zedapp.org/ editor.
+Read more: https://github.com/sequenceiq/docker-zedapp
+
+Installation
+------------
+
+To install nsenter, docker-enter, and zed run this:
+
+docker run --rm \
+  -v /usr/local/bin:/target \
+  -v /usr/local/bin/docker:/usr/local/bin/docker \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  sequenceiq/zedapp
+
+EOF
+
 fi
