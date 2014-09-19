@@ -1,18 +1,37 @@
 #!/bin/sh
 
+: ${DEBUG:=1}
+
+debug() {
+  [ $DEBUG -gt 0 ] && echo [DEBUG] "$@" 1>&2
+}
+
 zeddir() {
   local container=$1
   local zeddir=$2
   : ${container:? required}
   : ${zeddir:? required}
 
-  docker inspect zed-server &> /dev/null && echo zed-server is already running 1>&2 || docker run -d --name zed-server -p 7337:7337 --entrypoint=/bin/sh sequenceiq/zedapp -c "/zedrem --server"
+  zedisrunning=$(docker inspect -f "{{.State.Running}}" zed-server 2>/dev/null)
+  if [ "$zedisrunning" = "true" ]; then
+    echo [DEBUG] zed-server is already running
+  else
+    if [ "$zedisrunning" = "false" ]; then
+      debug zed-server is stopped, killing it
+      docker rm -f zed-server
+    fi
+    debug starting zed-server conatiner ...
+    docker run -d --name zed-server -p 7337:7337 --entrypoint=/bin/sh sequenceiq/zedapp -c "/zedrem --server"
+  fi
+
   local zedip=$(docker inspect -f "{{.NetworkSettings.IPAddress}}" zed-server)
 
+  debug copy zedrem binary into $container
   docker run --rm --entrypoint=sh sequenceiq/zedapp -c 'cat /zedrem' \
     | docker-enter $container sh -c 'cat>/zedrem'
   docker-enter $container sh -c 'chmod +x /zedrem'
 
+  debug starting zedrem in: $container conneting to ws://${zedip}:7337
   docker-enter $container sh -c "/zedrem -u ws://${zedip}:7337 ${zeddir}"
 }
 
