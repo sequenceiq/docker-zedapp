@@ -12,7 +12,7 @@ It looks like you are using boot2docker, so you have
 to define a helper function which calls the real
 script inside of boot2docker:
 
-  zed() { ssh b2d "sh -c \"sudo zed $@ \" " ; }
+  zed() { boot2docker ssh "sh -c \"sudo zed $@ \" " ; }
 
 you can put it into your ~/.profile
 

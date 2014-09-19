@@ -39,7 +39,7 @@ This will:
 If you are using boot2docker, than you need a helper function to call the
 script `zed`, which is installed inside of boot2docker:
 ```
-zed() { ssh b2d "sh -c \"sudo zed $@ \" " ; }
+zed() { boot2docker ssh "sh -c \"sudo zed $@ \" " ; }
 ```
 
 after that you can start a zed client like before:
