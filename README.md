@@ -15,16 +15,34 @@ start the *zed-server* in a docker container.
 
 Install the shell script into `/usr/local/bin` by:
 ```
-docker run --rm -v /usr/local/bin:/target sequenceiq/zedapp
+docker run --rm \
+  -v /usr/local/bin:/target \
+  -v /usr/local/bin/docker:/usr/local/bin/docker \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  sequenceiq/zedapp
 ```
 
 ## start session
 
-To start a session for remote edit files in a container
+To start a zedrem client in a container
 ```
 zed <container> <directory>
 ```
 
 This will:
 - start a `zed-server` if not already running.
-- print out the zed *remote-url* you have to copy-paste into zedapp.
+- print out the zed *remote-url* which you have to copy-paste into zedapp's
+ `URL toedit remotely` input field.
+
+## boot2docker
+
+If you are using boot2docker, than you need a helper function to call the
+script `zed`, which is installed inside of boot2docker:
+```
+zed() { ssh b2d "sh -c \"sudo zed $@ \" " ; }
+```
+
+after that you can start a zed client like before:
+```
+zed <container> <directory>
+```
