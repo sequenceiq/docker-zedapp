@@ -27,7 +27,7 @@ zeddir() {
   local zedip=$(docker inspect -f "{{.NetworkSettings.IPAddress}}" zed-server)
 
   debug copy zedrem binary into $container
-  docker-enter $container rm /zedrem
+  docker-enter $container rm -f /zedrem
   docker run --rm --entrypoint=sh sequenceiq/zedapp -c 'cat /zedrem' \
     | docker-enter $container sh -c 'cat>/zedrem'
   docker-enter $container chmod +x /zedrem
