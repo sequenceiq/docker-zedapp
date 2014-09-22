@@ -27,12 +27,13 @@ zeddir() {
   local zedip=$(docker inspect -f "{{.NetworkSettings.IPAddress}}" zed-server)
 
   debug copy zedrem binary into $container
+  docker-enter $container rm /zedrem
   docker run --rm --entrypoint=sh sequenceiq/zedapp -c 'cat /zedrem' \
-    | docker-enter $container "sh -c 'cat>/zedrem'"
-  docker-enter $container "sh -c 'chmod +x /zedrem'"
+    | docker-enter $container sh -c 'cat>/zedrem'
+  docker-enter $container chmod +x /zedrem
 
   debug starting zedrem in: $container conneting to ws://${zedip}:7337
-  docker-enter $container "sh -c \"/zedrem -u ws://${zedip}:7337 ${zeddir}\""
+  docker-enter $container /zedrem -u ws://${zedip}:7337 ${zeddir}
 }
 
 zeddir "$@"
