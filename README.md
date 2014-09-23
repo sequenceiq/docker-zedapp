@@ -6,7 +6,7 @@ of running docker containers. Its a replacement of the usual process:
 
 You can use zedapp as a *chrome plugin* or a *standalone* app. Downloads are
 available at: [zedapp.org](http://zedapp.org/download/). I recommend to
-the **standalone** version.
+go for the **standalone** version.
 
 ## install script
 
