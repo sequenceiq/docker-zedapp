@@ -2,7 +2,7 @@
 
 if mountpoint -q /target; then
 
-	if docker info | grep Boot2Docker &> /dev/null; then
+	if docker info | grep Boot2Docker 2>&1 > /dev/null; then
 		cat <<"EOF"
 
 Boot2docker
